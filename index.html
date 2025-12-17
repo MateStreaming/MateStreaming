@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Mi Streaming</title>
+
+<!-- FUENTES -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --azul:#0b3cff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#050b1e;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* FONDO BLUR */
+.fondo-blur{
+  position:fixed;
+  inset:0;
+  background:url('destacado.jpg') center/cover no-repeat;
+  filter:blur(40px) brightness(.4);
+  z-index:-2;
+}
+.fondo-oscuro{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top, rgba(11,60,255,.25), #050b1e 70%);
+  z-index:-1;
+}
+
+/* SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
+  background:#050b1e;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  transition:.6s;
+}
+#splash img{
+  width:200px;
+  animation:intro 2s ease;
+}
+@keyframes intro{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:15px;
+}
+header img{height:42px}
+
+/* DESTACADO */
+.destacado{
+  height:65vh;
+  background:
+    linear-gradient(to top,#050b1e,transparent),
+    url('destacado.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:flex-end;
+  padding:30px;
+}
+.destacado h1{
+  font-family:'Montserrat',sans-serif;
+  font-size:42px;
+  margin:0;
+}
+.destacado p{opacity:.8}
+
+/* BOTONES */
+button{
+  background:linear-gradient(90deg,var(--azul),#5f7dff);
+  border:none;
+  color:white;
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.05)}
+
+/* SECCIONES */
+h2{
+  font-family:'Montserrat',sans-serif;
+  padding:20px;
+  margin:0;
+}
+
+/* CATÁLOGO */
+.catalogo{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.item{
+  cursor:pointer;
+  transition:.3s;
+}
+.item:hover{transform:scale(1.08)}
+.item img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+.item p{
+  margin-top:8px;
+  font-size:14px;
+}
+
+/* SERIES */
+.proximamente{
+  height:40vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-family:'Montserrat',sans-serif;
+  font-size:38px;
+  letter-spacing:4px;
+  opacity:.7;
+}
+
+/* PLAYER */
+.player{
+  display:none;
+  padding:15px;
+}
+.player button{margin-bottom:10px}
+iframe{
+  width:100%;
+  height:80vh;
+  border:none;
+  border-radius:12px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .destacado h1{font-size:32px}
+  iframe{height:60vh}
+}
+</style>
+</head>
+
+<body>
+
+<div class="fondo-blur"></div>
+<div class="fondo-oscuro"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <img src="logo.png">
+</div>
+
+<header>
+  <img src="logo.png">
+</header>
+
+<!-- DESTACADO -->
+<section class="destacado">
+  <div>
+    <h1>Nora Mercedes</h1>
+    <p>La Película Original</p>
+    <button onclick="verVideo('nora1')">▶ Ver ahora</button>
+  </div>
+</section>
+
+<!-- PELÍCULAS -->
+<h2>Películas</h2>
+<div class="catalogo">
+
+  <div class="item" onclick="verVideo('nora1')">
+    <img src="nora1.jpg">
+    <p>Nora Mercedes – La Película</p>
+  </div>
+
+  <div class="item" onclick="verVideo('nora2')">
+    <img src="nora2.jpg">
+    <p>Nora Mercedes – La Película 2</p>
+  </div>
+
+  <div class="item" onclick="verVideo('nora3')">
+    <img src="nora3.jpg">
+    <p>Nora Mercedes – La Película 3</p>
+  </div>
+
+  <div class="item" onclick="verVideo('rewind')">
+    <img src="rewind2023.jpg">
+    <p>Mateo Producciones – Rewind 2023</p>
+  </div>
+
+  <div class="item" onclick="verVideo('normete')">
+    <img src="esperando_normete.jpg">
+    <p>Esperando a Normete</p>
+  </div>
+
+  <div class="item" onclick="verVideo('pou')">
+    <img src="el_pou.jpg">
+    <p>El Pou – Video Musical</p>
+  </div>
+
+  <div class="item" onclick="verVideo('laurita')">
+    <img src="la_laurita.jpg">
+    <p>La Laurita – Video Musical</p>
+  </div>
+
+</div>
+
+<!-- SERIES -->
+<h2>Series</h2>
+<div class="proximamente">
+  SERIES<br>PRÓXIMAMENTE
+</div>
+
+<!-- PLAYER -->
+<div class="player" id="player">
+  <button onclick="volver()">⬅ Volver</button>
+  <iframe id="frame" allow="autoplay"></iframe>
+</div>
+
+<script>
+/* BLOQUEO BÁSICO */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if(e.key==="F12"||(e.ctrlKey&&e.shiftKey)) e.preventDefault();
+});
+
+/* SPLASH */
+setTimeout(()=>{
+  document.getElementById('splash').style.opacity=0;
+  setTimeout(()=>document.getElementById('splash').style.display='none',600);
+},2000);
+
+/* IDS PROTEGIDOS */
+const videos={
+  nora1:"MS1FOFJuN18tTjAwTWh1dFd6cnNmQjFrODhUaGFfWV96",
+  nora2:"MThSdlfvNkw0VVNFbUlJT1NpYlhHY2N1WTlUTVppSGdWSg==",
+  nora3:"MVgwOUY2eXlLblpGcEFoTmNNTGNzZXlyS3VOOWRzMGdj",
+  rewind:"MXJSRDBCVVc5QmRBRENzQXdMYzZ1VW9uUnNGTTNLcEtC",
+  normete:"MU9XV0VMWmFfSVlLeu50MXVobmhwWGx1S3RiOG9qc1Rk",
+  pou:"MVgtaWpwWXdzVTd6QW4wXzdTVDBHVzNCX3h0S0lqRVZx",
+  laurita:"MW5VZVVwXzMzNlhaVmp0LVBfVnBHcXVVWUd1bmhnNVoy"
+};
+
+function decode(id){return atob(id);}
+
+function verVideo(key){
+  document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
+    .forEach(e=>{
+      e.style.opacity=0;
+      setTimeout(()=>e.style.display='none',300);
+    });
+
+  document.getElementById('player').style.display='block';
+  document.getElementById('frame').src =
+    "https://drive.google.com/file/d/"+decode(videos[key])+"/preview";
+}
+
+function volver(){
+  document.getElementById('frame').src='';
+  document.getElementById('player').style.display='none';
+  document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
+    .forEach(e=>{
+      e.style.display='';
+      setTimeout(()=>e.style.opacity=1,50);
+    });
+}
+</script>
+
+</body>
+</html>
