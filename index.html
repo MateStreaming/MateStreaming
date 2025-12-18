@@ -3,17 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Mi Streaming</title>
+<title>MateStreaming</title>
+
 <!-- FUENTES -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
 <style>
-:root{ --azul:#0b3cff; }
-*{box-sizing:border-box;}
-body{ margin:0; font-family:'Poppins',sans-serif; background:#050b1e; color:white; overflow-x:hidden; }
+:root{--azul:#0b3cff}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#050b1e;
+  color:white;
+  overflow-x:hidden;
+}
 
 /* FONDO BLUR */
-.fondo-blur{ position:fixed; inset:0; background:url('destacado.jpg') center/cover no-repeat; filter:blur(40px) brightness(.4); z-index:-2; }
-.fondo-oscuro{ position:fixed; inset:0; background:radial-gradient(circle at top, rgba(11,60,255,.25), #050b1e 70%); z-index:-1; }
+.fondo-blur{
+  position:fixed;
+  inset:0;
+  background:url('destacado.jpg') center/cover no-repeat;
+  filter:blur(40px) brightness(.4);
+  z-index:-2;
+}
+.fondo-oscuro{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top, rgba(11,60,255,.25), #050b1e 70%);
+  z-index:-1;
+}
 
 /* SPLASH */
 #splash{
@@ -24,51 +43,121 @@ body{ margin:0; font-family:'Poppins',sans-serif; background:#050b1e; color:whit
   justify-content:center;
   align-items:center;
   z-index:999;
-  opacity:1;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  transition:.6s;
 }
-#splash img{ width:200px; animation:intro 2s ease; }
-@keyframes intro{ from{transform:scale(.6);opacity:0} to{transform:scale(1);opacity:1} }
+#splash img{
+  width:200px;
+  animation:intro 2s ease;
+}
+@keyframes intro{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 
 /* HEADER */
-header{ text-align:center; padding:15px; }
+header{
+  text-align:center;
+  padding:15px;
+}
 header img{height:42px}
 
 /* DESTACADO */
-.destacado{ height:65vh; background: linear-gradient(to top,#050b1e,transparent), url('destacado.jpg') center/cover no-repeat; display:flex; align-items:flex-end; padding:30px; }
-.destacado h1{ font-family:'Montserrat',sans-serif; font-size:42px; margin:0; }
+.destacado{
+  height:65vh;
+  background:
+    linear-gradient(to top,#050b1e,transparent),
+    url('destacado.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:flex-end;
+  padding:30px;
+}
+.destacado h1{
+  font-family:'Montserrat',sans-serif;
+  font-size:42px;
+  margin:0;
+}
 .destacado p{opacity:.8}
 
 /* BOTONES */
-button{ background:linear-gradient(90deg,var(--azul),#5f7dff); border:none; color:white; padding:12px 26px; border-radius:30px; font-size:16px; cursor:pointer; transition:.3s; }
+button{
+  background:linear-gradient(90deg,var(--azul),#5f7dff);
+  border:none;
+  color:white;
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.3s;
+}
 button:hover{transform:scale(1.05)}
 
 /* SECCIONES */
-h2{ font-family:'Montserrat',sans-serif; padding:20px; margin:0; }
+h2{
+  font-family:'Montserrat',sans-serif;
+  padding:20px;
+  margin:0;
+}
 
 /* CATÁLOGO */
-.catalogo{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; padding:20px; }
-.item{ cursor:pointer; transition:.3s; }
+.catalogo{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.item{
+  cursor:pointer;
+  transition:.3s;
+}
 .item:hover{transform:scale(1.08)}
-.item img{ width:100%; height:240px; object-fit:cover; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.6); }
-.item p{ margin-top:8px; font-size:14px; }
+.item img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+.item p{
+  margin-top:8px;
+  font-size:14px;
+}
 
 /* SERIES */
-.proximamente{ height:40vh; display:flex; justify-content:center; align-items:center; text-align:center; font-family:'Montserrat',sans-serif; font-size:38px; letter-spacing:4px; opacity:.7; }
+.proximamente{
+  height:40vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-family:'Montserrat',sans-serif;
+  font-size:38px;
+  letter-spacing:4px;
+  opacity:.7;
+}
 
 /* PLAYER */
-.player{ display:none; padding:15px; }
+.player{
+  display:none;
+  padding:15px;
+}
 .player button{margin-bottom:10px}
-iframe{ width:100%; height:80vh; border:none; border-radius:12px; }
+video{
+  width:100%;
+  height:80vh;
+  background:black;
+  border-radius:12px;
+}
 
 /* MOBILE */
 @media(max-width:768px){
   .destacado h1{font-size:32px}
-  iframe{height:60vh}
+  video{height:60vh}
 }
 </style>
 </head>
+
 <body>
+
 <div class="fondo-blur"></div>
 <div class="fondo-oscuro"></div>
 
@@ -86,51 +175,61 @@ iframe{ width:100%; height:80vh; border:none; border-radius:12px; }
   <div>
     <h1>Nora Mercedes</h1>
     <p>La Película Original</p>
-    <button onclick="verVideo('1-E8Rn7_-N00MhutWzrsfB1k88Tha_Y_z')">▶ Ver ahora</button>
+    <button onclick="verVideo('nora1')">▶ Ver ahora</button>
   </div>
 </section>
 
 <!-- PELÍCULAS -->
 <h2>Películas</h2>
 <div class="catalogo">
-  <div class="item" onclick="verVideo('1-E8Rn7_-N00MhutWzrsfB1k88Tha_Y_z')">
-    <img src="nora1.jpg">
+
+  <div class="item" onclick="verVideo('nora1')">
+    <img src="posters/nora1.jpg">
     <p>Nora Mercedes – La Película</p>
   </div>
-  <div class="item" onclick="verVideo('18Rv_o6L4USEiIOSibXGccuY9TMZiHgVJ')">
-    <img src="nora2.jpg">
+
+  <div class="item" onclick="verVideo('nora2')">
+    <img src="posters/nora2.jpg">
     <p>Nora Mercedes – La Película 2</p>
   </div>
-  <div class="item" onclick="verVideo('1X09F6yyKnZFpAhNcMLcseyrKuN9ds0gc')">
-    <img src="nora3.jpg">
+
+  <div class="item" onclick="verVideo('nora3')">
+    <img src="posters/nora3.jpg">
     <p>Nora Mercedes – La Película 3</p>
   </div>
-  <div class="item" onclick="verVideo('1rRD0BUW9BdADCsAwLc6uUonRsFM3KpKB')">
-    <img src="rewind2023.jpg">
+
+  <div class="item" onclick="verVideo('rewind')">
+    <img src="posters/rewind2023.jpg">
     <p>Mateo Producciones – Rewind 2023</p>
   </div>
-  <div class="item" onclick="verVideo('1OWWELZa_IYKzNt1uhnhqXluKtb8ojsTd')">
-    <img src="esperando_normete.jpg">
+
+  <div class="item" onclick="verVideo('normete')">
+    <img src="posters/esperando_normete.jpg">
     <p>Esperando a Normete</p>
   </div>
-  <div class="item" onclick="verVideo('1X-ijpYwsU7zAn0_7ST0GW3B_xtKIjEVq')">
-    <img src="el_pou.jpg">
+
+  <div class="item" onclick="verVideo('pou')">
+    <img src="posters/el_pou.jpg">
     <p>El Pou – Video Musical</p>
   </div>
-  <div class="item" onclick="verVideo('1nUeUp_336XZvjt-P_VpG6qUyGunhg5Z2')">
-    <img src="la_laurita.jpg">
+
+  <div class="item" onclick="verVideo('laurita')">
+    <img src="posters/la_laurita.jpg">
     <p>La Laurita – Video Musical</p>
   </div>
+
 </div>
 
 <!-- SERIES -->
 <h2>Series</h2>
-<div class="proximamente"> SERIES<br>PRÓXIMAMENTE </div>
+<div class="proximamente">
+  SERIES<br>PRÓXIMAMENTE
+</div>
 
 <!-- PLAYER -->
 <div class="player" id="player">
   <button onclick="volver()">⬅ Volver</button>
-  <iframe id="frame" allow="autoplay"></iframe>
+  <video id="video" controls autoplay playsinline></video>
 </div>
 
 <script>
@@ -141,25 +240,45 @@ document.addEventListener('keydown',e=>{
 });
 
 /* SPLASH */
-const splash = document.getElementById('splash');
 setTimeout(()=>{
-  splash.style.opacity = 0;
-  splash.style.visibility = 'hidden';
-}, 2000);
+  const s = document.getElementById('splash');
+  s.style.opacity = 0;
+  setTimeout(()=>s.style.display='none',600);
+},2000);
 
-/* FUNCIONES */
-function verVideo(id){
+/* MAPA DE VIDEOS (GitHub Releases) */
+const base = "https://github.com/MateStreaming/MateStreaming/releases/download/videos-v1/";
+
+const videos = {
+  nora1: base + "nora1.mp4",
+  nora2: base + "nora2.mp4",
+  nora3: base + "nora3.mp4",
+  rewind: base + "rewind.mp4",
+  normete: base + "normete.mp4",
+  pou: base + "pou.mp4",
+  laurita: base + "laurita.mp4"
+};
+
+function verVideo(key){
   document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
     .forEach(e=>{
-      e.style.opacity=0;
+      e.style.opacity = 0;
       setTimeout(()=>e.style.display='none',300);
     });
-  document.getElementById('player').style.display='block';
-  document.getElementById('frame').src = "https://drive.google.com/file/d/"+id+"/preview";
+
+  const player = document.getElementById('player');
+  const video  = document.getElementById('video');
+
+  player.style.display = 'block';
+  video.src = videos[key];
+  video.play();
 }
 
 function volver(){
-  document.getElementById('frame').src='';
+  const video = document.getElementById('video');
+  video.pause();
+  video.src = '';
+
   document.getElementById('player').style.display='none';
   document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
     .forEach(e=>{
@@ -168,5 +287,6 @@ function volver(){
     });
 }
 </script>
+
 </body>
 </html>
