@@ -82,6 +82,23 @@ header img{height:42px}
   cursor:pointer;
 }
 
+/* CONTINUAR VIENDO */
+h2#continue-title{
+  font-family:'Montserrat',sans-serif;
+  padding:20px 20px 0;
+  margin:0;
+  display:none;
+}
+#catalogo-continue{
+  display:none;
+  flex-wrap: nowrap;
+  overflow-x:auto;
+  padding:20px;
+  gap:20px;
+}
+#catalogo-continue::-webkit-scrollbar{height:6px}
+#catalogo-continue::-webkit-scrollbar-thumb{background:#333;border-radius:10px}
+
 /* SECCIONES */
 h2{
   font-family:'Montserrat',sans-serif;
@@ -213,6 +230,7 @@ h2{
   <input type="text" id="search" placeholder="Buscar...">
 </header>
 
+<!-- DESTACADO -->
 <section class="destacado" id="destacado">
   <div class="destacado-content">
     <h1 id="destacado-title"></h1>
@@ -220,6 +238,10 @@ h2{
     <button id="destacado-btn">▶ Ver ahora</button>
   </div>
 </section>
+
+<!-- CONTINUAR VIENDO -->
+<h2 id="continue-title" style="display:none">▶ Continuar viendo</h2>
+<div class="catalogo" id="catalogo-continue" style="display:none"></div>
 
 <h2>🎬 Películas</h2>
 <div class="catalogo" id="catalogo-peliculas"></div>
@@ -257,7 +279,6 @@ setTimeout(()=>document.getElementById('splash').style.display='none',2000);
 const baseVideos="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v1/";
 const baseTrailers="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v2/";
 
-// Todos los videos
 const videos=[
  {k:"nora1", t:"Nora Mercedes, la película", p:"posters/nora1.jpg", d:"Destacados/destacado1.jpg", ds:"Primera producción", y:"2023", du:"8m40s", v:baseVideos+"nora1.mp4", tr:baseTrailers+"nora1.mp4"},
  {k:"nora2", t:"Nora Mercedes 2", p:"posters/nora2.jpg", d:"Destacados/destacado2.jpg", ds:"Nora enfrenta a su jefe", y:"2023", du:"9m41s", v:baseVideos+"nora2.mp4", tr:baseTrailers+"nora2.mp4"},
@@ -268,14 +289,13 @@ const videos=[
  {k:"laurita", t:"La Laurita - Videoclip", p:"posters/la_laurita.jpg", d:"Destacados/destacado7.jpg", ds:"Quién es María Laura", y:"2025", du:"1m55s", v:baseVideos+"laurita.mp4", tr:baseTrailers+"laurita.mp4"}
 ];
 
-// Secciones: definimos qué videos van en cada una
 const secciones={
   peliculas: ["nora1","nora2","nora3","rewind","normete"],
   nora: ["nora1","nora2","nora3"],
   videos: ["pou","laurita"]
 };
 
-// Función para crear catálogo por sección
+// Crear catálogo por sección
 Object.keys(secciones).forEach(sec=>{
   const container=document.getElementById(`catalogo-${sec}`);
   secciones[sec].forEach(k=>{
@@ -306,14 +326,20 @@ function openInfo(k){
   document.getElementById('info-year').textContent=actual.y;
   document.getElementById('info-duration').textContent=actual.du;
   document.getElementById('info-bg').style.backgroundImage=`url('${actual.d}')`;
-  document.getElementById('play-btn').onclick=()=>play(actual.v);
-  document.getElementById('trailer-btn').onclick=()=>play(actual.tr);
+  document.getElementById('play-btn').onclick=()=>play(actual.v, actual.k);
+  document.getElementById('trailer-btn').onclick=()=>play(actual.tr, actual.k);
 }
 function closeInfo(){document.getElementById('info').style.display='none'}
-function play(src){
+
+// Play y guardar último
+function play(src, key){
   document.getElementById('video').src=src;
   document.getElementById('player').style.display='flex';
   closeInfo();
+
+  // Guardar solo el último video
+  localStorage.setItem("continuarViendo", JSON.stringify({k: key}));
+  cargarContinuarViendo();
 }
 function closePlayer(){
   document.getElementById('video').pause();
@@ -331,6 +357,32 @@ searchInput.addEventListener('input',()=>{
     });
   });
 });
+
+// Cargar Continuar viendo (último video)
+function cargarContinuarViendo(){
+  const data = JSON.parse(localStorage.getItem("continuarViendo"));
+  if(!data) return;
+
+  const video = videos.find(v => v.k === data.k);
+  if(!video) return;
+
+  const cont = document.getElementById("catalogo-continue");
+  const title = document.getElementById("continue-title");
+
+  cont.innerHTML = `
+    <div class="item" onclick="play('${video.v}','${video.k}')">
+      <img src="${video.p}">
+      <p>${video.t}</p>
+    </div>
+  `;
+
+  cont.style.display = "flex";
+  title.style.display = "block";
+}
+
+// Ejecutar al cargar la página
+cargarContinuarViendo();
+
 </script>
 
 </body>
