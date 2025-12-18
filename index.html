@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>MateStreaming</title>
 
-<!-- FUENTES -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
-:root{--azul:#0b3cff}
+:root{--azul:#0b3cff;}
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -17,21 +16,6 @@ body{
   background:#050b1e;
   color:white;
   overflow-x:hidden;
-}
-
-/* FONDO BLUR */
-.fondo-blur{
-  position:fixed;
-  inset:0;
-  background:url('destacado.jpg') center/cover no-repeat;
-  filter:blur(40px) brightness(.4);
-  z-index:-2;
-}
-.fondo-oscuro{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at top, rgba(11,60,255,.25), #050b1e 70%);
-  z-index:-1;
 }
 
 /* SPLASH */
@@ -43,69 +27,81 @@ body{
   justify-content:center;
   align-items:center;
   z-index:999;
-  transition:.6s;
 }
-#splash img{
-  width:200px;
-  animation:intro 2s ease;
-}
-@keyframes intro{
-  from{transform:scale(.6);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
+#splash img{width:250px;animation:intro 2s ease}
+@keyframes intro{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 
 /* HEADER */
 header{
   text-align:center;
   padding:15px;
+  position:relative;
 }
 header img{height:42px}
+
+/* BUSCADOR */
+#search{
+  position:absolute;
+  top:12px;
+  right:15px;
+  padding:6px 12px;
+  border-radius:20px;
+  border:none;
+  font-size:14px;
+}
 
 /* DESTACADO */
 .destacado{
   height:65vh;
-  background:
-    linear-gradient(to top,#050b1e,transparent),
-    url('destacado.jpg') center/cover no-repeat;
+  background-size:cover;
+  background-position:center;
   display:flex;
   align-items:flex-end;
   padding:30px;
+  transition:background-image .8s ease;
+}
+.destacado-content{
+  background:linear-gradient(to top,#050b1e,transparent);
+  padding:25px;
+  border-radius:12px;
 }
 .destacado h1{
   font-family:'Montserrat',sans-serif;
   font-size:42px;
   margin:0;
 }
-.destacado p{opacity:.8}
-
-/* BOTONES */
-button{
+.destacado p{opacity:.85}
+.destacado button{
+  margin-top:10px;
   background:linear-gradient(90deg,var(--azul),#5f7dff);
   border:none;
   color:white;
-  padding:12px 26px;
+  padding:12px 28px;
   border-radius:30px;
   font-size:16px;
   cursor:pointer;
-  transition:.3s;
 }
-button:hover{transform:scale(1.05)}
 
 /* SECCIONES */
 h2{
   font-family:'Montserrat',sans-serif;
-  padding:20px;
+  padding:20px 20px 0;
   margin:0;
 }
 
 /* CATÁLOGO */
 .catalogo{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  display:flex;
   gap:20px;
   padding:20px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
 }
+.catalogo::-webkit-scrollbar{height:6px}
+.catalogo::-webkit-scrollbar-thumb{background:#333;border-radius:10px}
+
 .item{
+  min-width:160px;
   cursor:pointer;
   transition:.3s;
 }
@@ -120,172 +116,221 @@ h2{
 .item p{
   margin-top:8px;
   font-size:14px;
-}
-
-/* SERIES */
-.proximamente{
-  height:40vh;
+  height:40px;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   text-align:center;
-  font-family:'Montserrat',sans-serif;
-  font-size:38px;
-  letter-spacing:4px;
-  opacity:.7;
+  overflow:hidden;
 }
 
-/* PLAYER */
-.player{
+/* INFO */
+.info-section{
   display:none;
-  padding:15px;
+  position:fixed;
+  inset:0;
+  background:rgba(5,11,30,.96);
+  z-index:1000;
+  padding:40px;
+  animation:fade .4s ease;
 }
-.player button{margin-bottom:10px}
-video{
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.info-wrap{
+  display:flex;
+  gap:40px;
+  height:100%;
+}
+.info-left{
+  max-width:420px;
+}
+.info-left img{
   width:100%;
-  height:80vh;
-  background:black;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+.info-left p{margin:6px 0}
+.info-left button{
+  margin-top:12px;
+  margin-right:10px;
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+}
+.ver-btn{background:var(--azul);color:white}
+.trailer-btn{background:#ccc;color:black}
+.close-btn{background:#444;color:white}
+
+.info-right{
+  flex:1;
+  background-size:cover;
+  background-position:center;
   border-radius:12px;
 }
 
-/* MOBILE */
+/* PLAYER */
+#player{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1100;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+#player video{
+  width:90%;
+  max-width:1100px;
+  border-radius:12px;
+}
+#player button{
+  margin-top:15px;
+  background:var(--azul);
+  border:none;
+  color:white;
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+}
+
 @media(max-width:768px){
   .destacado h1{font-size:32px}
-  video{height:60vh}
+  .info-wrap{flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<div class="fondo-blur"></div>
-<div class="fondo-oscuro"></div>
-
-<!-- SPLASH -->
-<div id="splash">
-  <img src="logo.png">
-</div>
-
+<div id="splash"><img src="logo.png"></div>
 <header>
   <img src="logo.png">
+  <input type="text" id="search" placeholder="Buscar...">
 </header>
 
-<!-- DESTACADO -->
-<section class="destacado">
-  <div>
-    <h1>Nora Mercedes</h1>
-    <p>La Película Original</p>
-    <button onclick="verVideo('nora1')">▶ Ver ahora</button>
+<section class="destacado" id="destacado">
+  <div class="destacado-content">
+    <h1 id="destacado-title"></h1>
+    <p id="destacado-desc"></p>
+    <button id="destacado-btn">▶ Ver ahora</button>
   </div>
 </section>
 
-<!-- PELÍCULAS -->
-<h2>Películas</h2>
-<div class="catalogo">
+<h2>🎬 Películas</h2>
+<div class="catalogo" id="catalogo-peliculas"></div>
 
-  <div class="item" onclick="verVideo('nora1')">
-    <img src="posters/nora1.jpg">
-    <p>Nora Mercedes – La Película</p>
+<h2>🎥 Nora Mercedes: La Trilogía</h2>
+<div class="catalogo" id="catalogo-nora"></div>
+
+<h2>🎵 Videoclips</h2>
+<div class="catalogo" id="catalogo-videos"></div>
+
+<!-- INFO -->
+<div class="info-section" id="info">
+  <div class="info-wrap">
+    <div class="info-left">
+      <img id="info-logo">
+      <p id="info-desc"></p>
+      <p><strong>Año:</strong> <span id="info-year"></span> · <strong>Duración:</strong> <span id="info-duration"></span></p>
+      <button class="ver-btn" id="play-btn">▶ Ver ahora</button>
+      <button class="trailer-btn" id="trailer-btn">Trailer</button>
+      <button class="close-btn" onclick="closeInfo()">Cerrar</button>
+    </div>
+    <div class="info-right" id="info-bg"></div>
   </div>
-
-  <div class="item" onclick="verVideo('nora2')">
-    <img src="posters/nora2.jpg">
-    <p>Nora Mercedes – La Película 2</p>
-  </div>
-
-  <div class="item" onclick="verVideo('nora3')">
-    <img src="posters/nora3.jpg">
-    <p>Nora Mercedes – La Película 3</p>
-  </div>
-
-  <div class="item" onclick="verVideo('rewind')">
-    <img src="posters/rewind2023.jpg">
-    <p>Mateo Producciones – Rewind 2023</p>
-  </div>
-
-  <div class="item" onclick="verVideo('normete')">
-    <img src="posters/esperando_normete.jpg">
-    <p>Esperando a Normete</p>
-  </div>
-
-  <div class="item" onclick="verVideo('pou')">
-    <img src="posters/el_pou.jpg">
-    <p>El Pou – Video Musical</p>
-  </div>
-
-  <div class="item" onclick="verVideo('laurita')">
-    <img src="posters/la_laurita.jpg">
-    <p>La Laurita – Video Musical</p>
-  </div>
-
-</div>
-
-<!-- SERIES -->
-<h2>Series</h2>
-<div class="proximamente">
-  SERIES<br>PRÓXIMAMENTE
 </div>
 
 <!-- PLAYER -->
-<div class="player" id="player">
-  <button onclick="volver()">⬅ Volver</button>
+<div id="player">
   <video id="video" controls autoplay playsinline></video>
+  <button onclick="closePlayer()">⬅ Volver</button>
 </div>
 
 <script>
-/* BLOQUEO BÁSICO */
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{
-  if(e.key==="F12"||(e.ctrlKey&&e.shiftKey)) e.preventDefault();
-});
+setTimeout(()=>document.getElementById('splash').style.display='none',2000);
 
-/* SPLASH */
-setTimeout(()=>{
-  const s = document.getElementById('splash');
-  s.style.opacity = 0;
-  setTimeout(()=>s.style.display='none',600);
-},2000);
+const baseVideos="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v1/";
+const baseTrailers="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v2/";
 
-/* MAPA DE VIDEOS (GitHub Releases) */
-const base = "https://github.com/MateStreaming/MateStreaming/releases/download/videos-v1/";
+// Todos los videos
+const videos=[
+ {k:"nora1", t:"Nora Mercedes, la película", p:"posters/nora1.jpg", d:"Destacados/destacado1.jpg", ds:"Primera producción", y:"2023", du:"8m40s", v:baseVideos+"nora1.mp4", tr:baseTrailers+"nora1.mp4"},
+ {k:"nora2", t:"Nora Mercedes 2", p:"posters/nora2.jpg", d:"Destacados/destacado2.jpg", ds:"Nora enfrenta a su jefe", y:"2023", du:"9m41s", v:baseVideos+"nora2.mp4", tr:baseTrailers+"nora2.mp4"},
+ {k:"nora3", t:"Nora Mercedes 3", p:"posters/nora3.jpg", d:"Destacados/destacado3.jpg", ds:"Consecuencias virales", y:"2025", du:"12m58s", v:baseVideos+"nora3.mp4", tr:baseTrailers+"nora3.mp4"},
+ {k:"rewind", t:"Rewind 2023", p:"posters/rewind2023.jpg", d:"Destacados/destacado4.jpg", ds:"Recorrido anual", y:"2023", du:"10m", v:baseVideos+"rewind.mp4", tr:baseTrailers+"rewind.mp4"},
+ {k:"normete", t:"Esperando a Normete", p:"posters/esperando_normete.jpg", d:"Destacados/destacado5.jpg", ds:"Después de los 80", y:"2025", du:"13m26s", v:baseVideos+"normete.mp4", tr:baseTrailers+"normete.mp4"},
+ {k:"pou", t:"El Pou - Videoclip", p:"posters/el_pou.jpg", d:"Destacados/destacado6.jpg", ds:"Adicción al celular", y:"2025", du:"2m08s", v:baseVideos+"pou.mp4", tr:baseTrailers+"pou.mp4"},
+ {k:"laurita", t:"La Laurita - Videoclip", p:"posters/la_laurita.jpg", d:"Destacados/destacado7.jpg", ds:"Quién es María Laura", y:"2025", du:"1m55s", v:baseVideos+"laurita.mp4", tr:baseTrailers+"laurita.mp4"}
+];
 
-const videos = {
-  nora1: base + "nora1.mp4",
-  nora2: base + "nora2.mp4",
-  nora3: base + "nora3.mp4",
-  rewind: base + "rewind.mp4",
-  normete: base + "normete.mp4",
-  pou: base + "pou.mp4",
-  laurita: base + "laurita.mp4"
+// Secciones: definimos qué videos van en cada una
+const secciones={
+  peliculas: ["nora1","nora2","nora3","rewind","normete"],
+  nora: ["nora1","nora2","nora3"],
+  videos: ["pou","laurita"]
 };
 
-function verVideo(key){
-  document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
-    .forEach(e=>{
-      e.style.opacity = 0;
-      setTimeout(()=>e.style.display='none',300);
-    });
+// Función para crear catálogo por sección
+Object.keys(secciones).forEach(sec=>{
+  const container=document.getElementById(`catalogo-${sec}`);
+  secciones[sec].forEach(k=>{
+    const v=videos.find(x=>x.k===k);
+    container.innerHTML+=`<div class="item" data-title="${v.t.toLowerCase()}" onclick="openInfo('${v.k}')"><img src="${v.p}"><p>${v.t}</p></div>`;
+  });
+});
 
-  const player = document.getElementById('player');
-  const video  = document.getElementById('video');
-
-  player.style.display = 'block';
-  video.src = videos[key];
-  video.play();
+// Destacado rotativo
+let di=0;
+const dsec=document.getElementById('destacado');
+function rotar(){
+  const v=videos[di];
+  dsec.style.backgroundImage=`url('${v.d}')`;
+  document.getElementById('destacado-title').textContent=v.t;
+  document.getElementById('destacado-desc').textContent=v.ds;
+  document.getElementById('destacado-btn').onclick=()=>openInfo(v.k);
+  di=(di+1)%videos.length;
 }
+rotar();setInterval(rotar,8000);
 
-function volver(){
-  const video = document.getElementById('video');
-  video.pause();
-  video.src = '';
-
+let actual=null;
+function openInfo(k){
+  actual=videos.find(v=>v.k===k);
+  document.getElementById('info').style.display='block';
+  document.getElementById('info-logo').src=actual.p;
+  document.getElementById('info-desc').textContent=actual.ds;
+  document.getElementById('info-year').textContent=actual.y;
+  document.getElementById('info-duration').textContent=actual.du;
+  document.getElementById('info-bg').style.backgroundImage=`url('${actual.d}')`;
+  document.getElementById('play-btn').onclick=()=>play(actual.v);
+  document.getElementById('trailer-btn').onclick=()=>play(actual.tr);
+}
+function closeInfo(){document.getElementById('info').style.display='none'}
+function play(src){
+  document.getElementById('video').src=src;
+  document.getElementById('player').style.display='flex';
+  closeInfo();
+}
+function closePlayer(){
+  document.getElementById('video').pause();
   document.getElementById('player').style.display='none';
-  document.querySelectorAll('.catalogo,h2,.destacado,.proximamente')
-    .forEach(e=>{
-      e.style.display='';
-      setTimeout(()=>e.style.opacity=1,50);
-    });
 }
+
+// Buscador
+const searchInput=document.getElementById('search');
+searchInput.addEventListener('input',()=>{
+  const val=searchInput.value.toLowerCase();
+  Object.keys(secciones).forEach(sec=>{
+    secciones[sec].forEach(k=>{
+      const el=document.querySelector(`#catalogo-${sec} .item[onclick="openInfo('${k}')"]`);
+      el.style.display=videos.find(v=>v.k===k).t.toLowerCase().includes(val)?"flex":"none";
+    });
+  });
+});
 </script>
 
 </body>
