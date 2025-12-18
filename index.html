@@ -28,95 +28,100 @@ body{
   align-items:center;
   z-index:999;
 }
-#splash img{width:250px;animation:intro 2s ease}
+#splash img{
+  width:180px;
+  max-width:70%;
+  animation:intro 2s ease;
+}
 @keyframes intro{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
 
 /* HEADER */
 header{
   text-align:center;
-  padding:15px;
+  padding:10px 5px;
   position:relative;
 }
-header img{height:42px}
+header img{height:36px; max-height:8vw;}
 
 /* BUSCADOR */
 #search{
   position:absolute;
-  top:12px;
-  right:15px;
-  padding:6px 12px;
-  border-radius:20px;
+  top:8px;
+  right:8px;
+  padding:5px 10px;
+  border-radius:15px;
   border:none;
-  font-size:14px;
+  font-size:12px;
 }
 
 /* DESTACADO */
 .destacado{
-  height:65vh;
+  height:50vh;
   background-size:cover;
   background-position:center;
   display:flex;
   align-items:flex-end;
-  padding:30px;
+  padding:15px;
   transition:background-image .8s ease;
 }
 .destacado-content{
   background:linear-gradient(to top,#050b1e,transparent);
-  padding:25px;
-  border-radius:12px;
+  padding:15px;
+  border-radius:10px;
 }
 .destacado h1{
   font-family:'Montserrat',sans-serif;
-  font-size:42px;
+  font-size:28px;
   margin:0;
 }
-.destacado p{opacity:.85}
+.destacado p{opacity:.85;font-size:12px}
 .destacado button{
-  margin-top:10px;
+  margin-top:8px;
   background:linear-gradient(90deg,var(--azul),#5f7dff);
   border:none;
   color:white;
-  padding:12px 28px;
-  border-radius:30px;
-  font-size:16px;
+  padding:10px 20px;
+  border-radius:25px;
+  font-size:14px;
   cursor:pointer;
 }
 
 /* SECCIONES */
 h2{
   font-family:'Montserrat',sans-serif;
-  padding:20px 20px 0;
+  padding:15px 10px 5px;
   margin:0;
+  font-size:16px;
 }
 
 /* CATÁLOGO */
 .catalogo{
   display:flex;
-  gap:20px;
-  padding:20px;
+  gap:10px;
+  padding:10px;
   overflow-x:auto;
   scroll-behavior:smooth;
 }
-.catalogo::-webkit-scrollbar{height:6px}
+.catalogo::-webkit-scrollbar{height:5px}
 .catalogo::-webkit-scrollbar-thumb{background:#333;border-radius:10px}
 
 .item{
-  min-width:160px;
+  min-width:120px;
   cursor:pointer;
   transition:.3s;
 }
-.item:hover{transform:scale(1.08)}
+.item:hover{transform:scale(1.05)}
 .item img{
   width:100%;
-  height:240px;
+  height:180px;
   object-fit:cover;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  border-radius:10px;
+  box-shadow:0 6px 20px rgba(0,0,0,.6);
 }
 .item p{
-  margin-top:8px;
-  font-size:14px;
-  height:40px;
+  margin-top:5px;
+  font-size:12px;
+  height:32px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -131,32 +136,34 @@ h2{
   inset:0;
   background:rgba(5,11,30,.96);
   z-index:1000;
-  padding:40px;
+  padding:20px;
   animation:fade .4s ease;
 }
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
 .info-wrap{
   display:flex;
-  gap:40px;
+  gap:20px;
   height:100%;
+  flex-wrap:wrap;
 }
 .info-left{
-  max-width:420px;
+  max-width:300px;
+  flex:1;
 }
 .info-left img{
   width:100%;
-  border-radius:12px;
-  margin-bottom:20px;
+  border-radius:10px;
+  margin-bottom:10px;
 }
-.info-left p{margin:6px 0}
+.info-left p{margin:4px 0;font-size:12px}
 .info-left button{
-  margin-top:12px;
-  margin-right:10px;
-  padding:12px 26px;
+  margin-top:8px;
+  margin-right:6px;
+  padding:8px 20px;
   border:none;
-  border-radius:30px;
-  font-size:15px;
+  border-radius:25px;
+  font-size:13px;
   cursor:pointer;
 }
 .ver-btn{background:var(--azul);color:white}
@@ -165,9 +172,10 @@ h2{
 
 .info-right{
   flex:1;
+  min-height:200px;
   background-size:cover;
   background-position:center;
-  border-radius:12px;
+  border-radius:10px;
 }
 
 /* PLAYER */
@@ -180,26 +188,29 @@ h2{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:20px;
+  padding:10px;
 }
 #player video{
-  width:90%;
-  max-width:1100px;
-  border-radius:12px;
+  width:100%;
+  max-width:100%;
+  border-radius:10px;
 }
 #player button{
-  margin-top:15px;
+  margin-top:10px;
   background:var(--azul);
   border:none;
   color:white;
-  padding:12px 26px;
-  border-radius:30px;
-  font-size:16px;
+  padding:10px 20px;
+  border-radius:25px;
+  font-size:14px;
   cursor:pointer;
 }
 
-@media(max-width:768px){
-  .destacado h1{font-size:32px}
+@media(max-width:480px){
+  .destacado h1{font-size:22px}
+  .destacado p{font-size:11px}
+  .item img{height:140px}
+  .item p{height:28px;font-size:11px}
   .info-wrap{flex-direction:column}
 }
 </style>
@@ -257,7 +268,6 @@ setTimeout(()=>document.getElementById('splash').style.display='none',2000);
 const baseVideos="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v1/";
 const baseTrailers="https://github.com/MateStreaming/MateStreaming/releases/download/videos-v2/";
 
-// Todos los videos
 const videos=[
  {k:"nora1", t:"Nora Mercedes, la película", p:"posters/nora1.jpg", d:"Destacados/destacado1.jpg", ds:"Primera producción", y:"2023", du:"8m40s", v:baseVideos+"nora1.mp4", tr:baseTrailers+"nora1.mp4"},
  {k:"nora2", t:"Nora Mercedes 2", p:"posters/nora2.jpg", d:"Destacados/destacado2.jpg", ds:"Nora enfrenta a su jefe", y:"2023", du:"9m41s", v:baseVideos+"nora2.mp4", tr:baseTrailers+"nora2.mp4"},
@@ -268,14 +278,12 @@ const videos=[
  {k:"laurita", t:"La Laurita - Videoclip", p:"posters/la_laurita.jpg", d:"Destacados/destacado7.jpg", ds:"Quién es María Laura", y:"2025", du:"1m55s", v:baseVideos+"laurita.mp4", tr:baseTrailers+"laurita.mp4"}
 ];
 
-// Secciones: definimos qué videos van en cada una
 const secciones={
   peliculas: ["nora1","nora2","nora3","rewind","normete"],
   nora: ["nora1","nora2","nora3"],
   videos: ["pou","laurita"]
 };
 
-// Función para crear catálogo por sección
 Object.keys(secciones).forEach(sec=>{
   const container=document.getElementById(`catalogo-${sec}`);
   secciones[sec].forEach(k=>{
@@ -284,7 +292,6 @@ Object.keys(secciones).forEach(sec=>{
   });
 });
 
-// Destacado rotativo
 let di=0;
 const dsec=document.getElementById('destacado');
 function rotar(){
